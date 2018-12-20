@@ -43,6 +43,13 @@ class DateUtilsTest {
     }
 
     @Test
+    void calculateWorkDateFromFridayForWorkingSaturdayOnly() {
+        LocalDateTime friday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+        LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(friday, true, false);
+        assertEquals(DayOfWeek.SATURDAY, localDate.getDayOfWeek());
+    }
+
+    @Test
     void calculateWorkDateFromSaturdayForWorkingWeekend() {
         LocalDateTime saturday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
         LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(saturday, true, true);
@@ -50,9 +57,38 @@ class DateUtilsTest {
     }
 
     @Test
+    void calculateWorkDateFromSaturdayForWorkingSundayOnly() {
+        LocalDateTime saturday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(saturday, false, true);
+        assertEquals(DayOfWeek.SUNDAY, localDate.getDayOfWeek());
+    }
+
+
+    @Test
+    void calculateWorkDateFromSaturdayForNotWorkingSundayOnly() {
+        LocalDateTime saturday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
+        LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(saturday, true, false);
+        assertEquals(DayOfWeek.MONDAY, localDate.getDayOfWeek());
+    }
+
+    @Test
     void calculateWorkDateFromSaturdayForNotWorkingWeekend() {
         LocalDateTime saturday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.SATURDAY));
         LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(saturday);
         assertEquals(DayOfWeek.MONDAY, localDate.getDayOfWeek());
+    }
+
+    @Test
+    void calculateWorkDateFromMiddleOfTheWeekForNotWorkingWeekend() {
+        LocalDateTime wednesday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+        LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(wednesday);
+        assertEquals(DayOfWeek.THURSDAY, localDate.getDayOfWeek());
+    }
+
+    @Test
+    void calculateWorkDateFromMiddleOfTheWeekForWorkingWeekend() {
+        LocalDateTime wednesday = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY));
+        LocalDate localDate = DateUtils.calculateNextWorkDayDateFor(wednesday, true, true);
+        assertEquals(DayOfWeek.THURSDAY, localDate.getDayOfWeek());
     }
 }
