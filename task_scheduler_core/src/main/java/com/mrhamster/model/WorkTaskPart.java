@@ -1,4 +1,4 @@
-package com.mrhamster;
+package com.mrhamster.model;
 
 import java.time.Duration;
 

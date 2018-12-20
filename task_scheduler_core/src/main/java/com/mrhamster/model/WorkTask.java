@@ -1,4 +1,4 @@
-package com.mrhamster;
+package com.mrhamster.model;
 
 import java.time.LocalDateTime;
 
@@ -32,9 +32,5 @@ public class WorkTask {
 
     public LocalDateTime getCreationTime() {
         return creationTime;
-    }
-
-    public void splitTaskPart(){
-
     }
 }
