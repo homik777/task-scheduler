@@ -13,7 +13,7 @@ public class TaskCalendar {
     private List<WorkPeriod> workPeriods = new ArrayList<>();
 
     public void addTask(WorkTask task){
-
+        tasks.add(task);
     }
 
     public void addTask(WorkTask... tasks ){
