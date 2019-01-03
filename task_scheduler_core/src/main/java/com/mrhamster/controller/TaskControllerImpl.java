@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TaskControllerImpl implements TaskController{
@@ -28,5 +30,9 @@ public class TaskControllerImpl implements TaskController{
         WorkTask newTask = new WorkTask(name, estimatedExecutionTime);
         tasks.add(newTask);
         log.info(()-> new ParameterizedMessage(TaskSchedulerMessages.TASK_CREATED_SUCCESSFULLY, name));
+    }
+
+    public List<WorkTask> getTasks() {
+        return Collections.unmodifiableList(tasks);
     }
 }
