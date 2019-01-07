@@ -9,22 +9,5 @@ import java.util.List;
 
 public class TaskCalendar {
 
-    private List<WorkTask> tasks = new ArrayList<>();
     private List<WorkPeriod> workPeriods = new ArrayList<>();
-
-    public void addTask(WorkTask task){
-        tasks.add(task);
-    }
-
-    public void addTask(WorkTask... tasks ){
-
-    }
-
-
-
-
-
-
-
-
 }

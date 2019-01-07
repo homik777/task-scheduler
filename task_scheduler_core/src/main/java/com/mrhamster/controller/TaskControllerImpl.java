@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class TaskControllerImpl implements TaskController{
 
@@ -32,7 +34,21 @@ public class TaskControllerImpl implements TaskController{
         log.info(()-> new ParameterizedMessage(TaskSchedulerMessages.TASK_CREATED_SUCCESSFULLY, name));
     }
 
+    @Override
+    public void deleteTask(String name) {
+
+    }
+
+    @Override
+    public void deleteTask(Integer id) {
+
+    }
+
     public List<WorkTask> getTasks() {
         return Collections.unmodifiableList(tasks);
+    }
+
+    public List<WorkTask> getTasks(Predicate<WorkTask> filter){
+        return Collections.unmodifiableList(tasks.stream().filter(filter).collect(Collectors.toList()));
     }
 }

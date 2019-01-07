@@ -1,0 +1,13 @@
+1. Task management
+    Create task
+    Delete task
+    Edit task
+2. Auto-schedule
+    Schedule not scheduled only (no replacement)
+    Re-schedule all based on priority
+4. Display calendar
+    Print all tasks
+    Print scheduled tasks
+    Print unscheduled tasks
+    Print tasks for current day/weak/month
+    Print tasks for given day/weak/month
