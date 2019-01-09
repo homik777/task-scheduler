@@ -11,13 +11,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +33,10 @@ class TaskControllerImplTest {
 
     @BeforeEach
     void setUp() {
+        taskController = new TaskControllerImpl();
+        taskController.createTask("Delete me using name", 10);
+        taskController.createTask("Delete me using id", 10); // id: 1
+
         Mockito.when(mockAppender.getName()).thenReturn("MockAppender");
         Mockito.when(mockAppender.isStarted()).thenReturn(true);
         Mockito.lenient().when(mockAppender.isStopped()).thenReturn(false);
@@ -50,7 +50,6 @@ class TaskControllerImplTest {
         logger.addAppender(mockAppender);
         logger.setLevel(Level.ALL);
 
-        taskController = new TaskControllerImpl();
     }
 
     @AfterEach
@@ -63,16 +62,33 @@ class TaskControllerImplTest {
     @Test
     void createTask() {
         taskController.createTask("Test task creation.", 60);
-        Assertions.assertEquals(1, taskController.getTasks().size());
+        Assertions.assertEquals(3, taskController.getTasks().size());
         verifyLogMessage("Task [Test task creation.] was created successfully.");
     }
 
     @Test
     void createTaskWithPriority() {
         taskController.createTask("Test task creation.", 60, Priority.CRITICAL);
-        Assertions.assertEquals(1, taskController.getTasks().size());
+        Assertions.assertEquals(3, taskController.getTasks().size());
         verifyLogMessage("Task [Test task creation.] was created successfully.");
     }
+
+    @Test
+    void deleteTaskWithName() {
+        Assertions.assertEquals(2, taskController.getTasks().size());
+        taskController.deleteTask("Delete me using name");
+        Assertions.assertEquals(1, taskController.getTasks().size());
+        verifyLogMessage("Task [name:Delete me using name] was deleted successfully.");
+    }
+
+    @Test
+    void deleteTaskWithId() {
+        Assertions.assertEquals(2, taskController.getTasks().size());
+        taskController.deleteTask(1);
+        Assertions.assertEquals(1, taskController.getTasks().size());
+        verifyLogMessage("Task [id:1] was deleted successfully.");
+    }
+
 
     private void verifyLogMessage(String message){
         Assertions.assertEquals(1, capturedLogEvents.size(), "Captured events");

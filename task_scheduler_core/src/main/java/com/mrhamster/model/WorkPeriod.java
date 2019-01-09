@@ -8,7 +8,7 @@ import java.util.TreeMap;
 public class WorkPeriod {
     private LocalDateTime startTime;
     private Duration duration;
-    private NavigableMap<LocalDateTime, WorkTaskPart> taskParts = new TreeMap<>();
+    private NavigableMap<LocalDateTime, CalendarTask> taskParts = new TreeMap<>();
 
     public WorkPeriod(LocalDateTime startTime, Duration duration){
         this.startTime = startTime;
