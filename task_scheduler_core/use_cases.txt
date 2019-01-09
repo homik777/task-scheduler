@@ -1,4 +1,4 @@
-1. Task management
+1. Task management:
     Create task
     Delete task
     Edit task
