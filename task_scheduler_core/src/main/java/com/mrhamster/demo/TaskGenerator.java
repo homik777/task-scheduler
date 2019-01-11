@@ -3,6 +3,7 @@ package com.mrhamster.demo;
 import com.mrhamster.model.Priority;
 import com.mrhamster.model.WorkTask;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -19,8 +20,8 @@ public class TaskGenerator {
         return IntStream.range(0, noOfTasks).boxed().map(r -> new WorkTask("Do task nr. " + r, generateDurationTime(), generatePriority())).collect(Collectors.toList());
     }
 
-    private Integer generateDurationTime() {
-        return random.nextInt(maxTaskDurationInMinutes);
+    private Duration generateDurationTime() {
+        return Duration.ofMinutes(random.nextInt(maxTaskDurationInMinutes));
     }
 
     private Priority generatePriority() {

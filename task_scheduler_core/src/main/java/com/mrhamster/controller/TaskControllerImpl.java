@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,14 +21,14 @@ public class TaskControllerImpl implements TaskController {
     private List<WorkTask> tasks = new ArrayList<>();
 
     @Override
-    public void createTask(String name, Integer estimatedExecutionTime, Priority priority) {
+    public void createTask(String name, Duration estimatedExecutionTime, Priority priority) {
         WorkTask newTask = new WorkTask(name, estimatedExecutionTime, priority);
         tasks.add(newTask);
         log.info(() -> new ParameterizedMessage(TaskSchedulerMessages.TASK_CREATED_SUCCESSFULLY, name));
     }
 
     @Override
-    public void createTask(String name, Integer estimatedExecutionTime) {
+    public void createTask(String name, Duration estimatedExecutionTime) {
         WorkTask newTask = new WorkTask(name, estimatedExecutionTime);
         tasks.add(newTask);
         log.info(() -> new ParameterizedMessage(TaskSchedulerMessages.TASK_CREATED_SUCCESSFULLY, name));

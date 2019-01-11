@@ -2,29 +2,28 @@ package com.mrhamster.model;
 
 import com.mrhamster.utils.IdGenerator;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.*;
 
 public class WorkTask {
     private Integer id = IdGenerator.generateId(WorkTask.class);
     private Priority priority = Priority.MEDIUM;
     private LocalDateTime creationTime = LocalDateTime.now();
-    private WorkTaskStatus status = WorkTaskStatus.NOT_SCHEDULED;
     private String name;
-    private Integer estimatedTimeInMinutes;
+    private Duration duration;
+    private PriorityQueue<WorkTaskPart> taskParts = new PriorityQueue<>(Comparator.comparing(WorkTaskPart::getPartId, Comparator.naturalOrder()));
 
-    public WorkTask(String name, Integer estimatedTimeInMinutes) {
+    public WorkTask(String name, Duration duration) {
         this.name = name;
-        this.estimatedTimeInMinutes = estimatedTimeInMinutes;
+        this.duration = duration;
     }
 
-    public WorkTask(String name, Integer estimatedTimeInMinutes, Priority priority) {
-        this(name, estimatedTimeInMinutes);
+    public WorkTask(String name, Duration duration, Priority priority) {
+        this(name, duration);
         this.priority = priority;
     }
 
-    public void setStatus(WorkTaskStatus status) {
-        this.status = status;
-    }
 
     public Integer getId() {
         return id;
@@ -34,8 +33,8 @@ public class WorkTask {
         return name;
     }
 
-    public Integer getEstimatedTimeInMinutes() {
-        return estimatedTimeInMinutes;
+    public Duration getDuration() {
+        return duration;
     }
 
     public Priority getPriority() {
@@ -44,5 +43,9 @@ public class WorkTask {
 
     public LocalDateTime getCreationTime() {
         return creationTime;
+    }
+
+    public Collection<WorkTaskPart> getParts() {
+        return Collections.unmodifiableCollection(taskParts);
     }
 }

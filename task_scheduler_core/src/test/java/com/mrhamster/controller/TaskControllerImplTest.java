@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,8 @@ class TaskControllerImplTest {
     @BeforeEach
     void setUp() {
         taskController = new TaskControllerImpl();
-        taskController.createTask("Delete me using name", 10);
-        taskController.createTask("Delete me using id", 10); // id: 1
+        taskController.createTask("Delete me using name", Duration.ofMinutes(10));
+        taskController.createTask("Delete me using id", Duration.ofMinutes(10)); // id: 1
 
         Mockito.when(mockAppender.getName()).thenReturn("MockAppender");
         Mockito.when(mockAppender.isStarted()).thenReturn(true);
@@ -61,14 +62,14 @@ class TaskControllerImplTest {
 
     @Test
     void createTask() {
-        taskController.createTask("Test task creation.", 60);
+        taskController.createTask("Test task creation.", Duration.ofMinutes(60));
         Assertions.assertEquals(3, taskController.getTasks().size());
         verifyLogMessage("Task [Test task creation.] was created successfully.");
     }
 
     @Test
     void createTaskWithPriority() {
-        taskController.createTask("Test task creation.", 60, Priority.CRITICAL);
+        taskController.createTask("Test task creation.", Duration.ofMinutes(60), Priority.CRITICAL);
         Assertions.assertEquals(3, taskController.getTasks().size());
         verifyLogMessage("Task [Test task creation.] was created successfully.");
     }
